@@ -8,10 +8,19 @@ router.post("/movie", (request, response, next) => {
     .catch(errors => next(errors));
 });
 
+// router.get("/movie", (request, response, next) => {
+//   Movie.findAll()
+//     .then(result => response.send(result))
+//     .catch(errors => next(errors));
+// });
+
 router.get("/movie", (request, response, next) => {
-  Movie.findAll()
-    .then(result => response.send(result))
-    .catch(errors => next(errors));
+  const limit = request.query.limit || 2;
+  const offset = request.query.offset || 0;
+
+  Movie.findAndCountAll({ limit, offset })
+    .then(result => response.send({ events: result.rows, total: result.count }))
+    .catch(error => next(error));
 });
 
 router.get("/movie/:id", (request, respose, next) => {

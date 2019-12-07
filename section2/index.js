@@ -1,6 +1,5 @@
 const express = require("express");
-const port = 4000;
-const db = require("./sequelize-rest");
+const port = process.env.PORT || 4000;
 const bodyParser = require("body-parser");
 const router = require("./movies/router");
 
