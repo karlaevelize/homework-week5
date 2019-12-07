@@ -1,7 +1,11 @@
 const express = require("express");
 const port = 4000;
-const db = require("./sequelize-rest");
 const app = express();
-const Movie = require("./movies/model");
+const router = require("./movies/router");
+const bodyParser = require("body-parser");
 
+const parserMiddleware = bodyParser.json();
+app.use(parserMiddleware);
+
+app.listen(router);
 app.listen(port, () => console.log(`Hey, I'm listening on port ${port}!`));
